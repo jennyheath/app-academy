@@ -84,7 +84,7 @@ class CheckerBoard
 
     potential_jump_moves = {}
     pieces.each do |piece|
-      debugger
+      # debugger
       potential_jump_moves[piece] = piece.jump_moves(piece.pos).select do |jump_move|
         piece.valid_jump?(piece.pos, jump_move)
       end

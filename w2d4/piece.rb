@@ -20,11 +20,11 @@ class Piece
   end
 
   def perform_jump(start_pos, end_pos)
-    jumped = jumped_piece(start_pos, end_pos)
-    return false unless @board[jumped]
-    jumped_opponent = true if @board[jumped].color != @color
+    # jumped = jumped_piece(start_pos, end_pos)
+    # return false unless @board[jumped]
+    # jumped_opponent = true if @board[jumped].color != @color
 
-    if jumped_opponent && valid_jump?(start_pos, end_pos)
+    if valid_jump?(start_pos, end_pos) #jumped_opponent &&
       move!(start_pos, end_pos)
       @board[jumped] = nil
       @king = true if promote?
@@ -106,7 +106,11 @@ class Piece
   end
 
   def valid_jump?(start_pos, end_pos)
-    !@board[end_pos] && jump_moves(start_pos).include?(end_pos)
+    jumped = jumped_piece(start_pos, end_pos)
+    return false unless @board[jumped]
+    jumped_opponent = true if @board[jumped].color != @color
+
+    !@board[end_pos] && jump_moves(start_pos).include?(end_pos) && jumped_opponent
   end
 
   def valid_move_seq?(move_sequence)
