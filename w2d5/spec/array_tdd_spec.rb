@@ -6,7 +6,7 @@ describe Array do
     let(:arr) { [1, 2, 1, 3, 3] }
 
     it "removes non-unique numbers" do
-      expect(arr.my_uniq).to be([1, 2, 3])
+      expect(arr.my_uniq).to eq([1, 2, 3])
     end
   end
 
@@ -15,11 +15,11 @@ describe Array do
     let(:arr2) { [-1, -1, 1, 1] }
 
     it "finds all pairs of positions where elements sum to zero" do
-      expect(arr.two_sum).to be([[0, 4], [2, 3]])
+      expect(arr.two_sum).to eq([[0, 4], [2, 3]])
     end
 
     it "finds pairs in the correct order" do
-      expect(arr2.two_sum).to be([[0, 2], [0, 3], [1, 2], [1, 3]])
+      expect(arr2.two_sum).to eq([[0, 2], [0, 3], [1, 2], [1, 3]])
     end
   end
 
@@ -28,11 +28,11 @@ describe Array do
     let(:rectangular) { [[1, 2], [3, 4], [5, 6]] }
 
     it "transposes a matrix" do
-      expect(matrix.my_transpose).to be([[0, 3, 6], [1, 4, 7], [2, 5, 8]])
+      expect(matrix.my_transpose).to eq([[0, 3, 6], [1, 4, 7], [2, 5, 8]])
     end
 
     it "transposes a matrix with different dimensions" do
-      expect(rectangular.my_transpose).to be([[1, 3, 5], [2, 4, 6]])
+      expect(rectangular.my_transpose).to eq([[1, 3, 5], [2, 4, 6]])
     end
   end
 
@@ -40,8 +40,7 @@ describe Array do
     let(:days) { [3, 1, 5, 2, 4] }
 
     it "returns the most profitable pair of days" do
-      expect(days.stock_picker).to be([1, 2])
+      expect(days.stock_picker).to eq([1, 2])
     end
   end
-
 end
