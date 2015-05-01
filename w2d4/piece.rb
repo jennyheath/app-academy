@@ -31,6 +31,15 @@ class Piece
   end
 
   def perform_moves(move_sequence)
+    if @board.available_jump_move?(@color)
+      jumps = @board.available_jump_moves(@color).values
+
+      start_pos, second_pos = move_sequence[0], move_sequence[1]
+      if !jumps.include?([start_pos, second_pos])
+        raise InvalidMoveError.new("You must make a jump move")
+      end
+    end
+
     if move_sequence.count == 2
       start_pos, end_pos = move_sequence
       unless perform_slide(start_pos, end_pos) || perform_jump(start_pos, end_pos)
