@@ -44,6 +44,15 @@ class CheckerBoard
     # self[[1,1]] = Piece.new(self, :balck, [1,1])
     # self[[1,1]] = Piece.new(self, :red, [1,1])
     # self[[6,0]] = Piece.new(self, :black, [6,0])
+    each_tile_with_index do |row, row_idx, tile, col_idx|
+      pos = [row_idx, col_idx]
+      if row_idx <= 2
+        self[pos] = Piece.new(self, :black, pos) if (row_idx - col_idx).even?
+      elsif row_idx >= 5
+        self[pos] = Piece.new(self, :red, pos) if (row_idx - col_idx).even?
+      end
+    end
+    self[[2,4]] = Piece.new(self, :red, [2,4])
   end
 
   def display
@@ -84,9 +93,8 @@ class CheckerBoard
 
     potential_jump_moves = {}
     pieces.each do |piece|
-      # debugger
       piece.jump_moves(piece.pos).select do |jump_move|
-        potential_jump_moves[piece] = jump_move if piece.valid_jump?(piece.pos, jump_move)
+        potential_jump_moves[piece] = [piece.pos, jump_move] if piece.valid_jump?(piece.pos, jump_move)
       end
     end
 
