@@ -38,6 +38,12 @@ class CheckerBoard
     end
   end
 
+  def set_test_board
+    self[[4,4]] = Piece.new(self, :red, [4,4])
+    self[[3,3]] = Piece.new(self, :black, [3,3])
+    self[[1,1]] = Piece.new(self, :balck, [1,1])
+  end
+
   def display
     puts "   1  2  3  4  5  6  7  8 "
     @grid.each_with_index do |row, row_idx|
@@ -67,31 +73,31 @@ class CheckerBoard
   end
 end
 
-game = CheckerBoard.new
-game.set_board
-game.display
-
-game[[2,0]].perform_slide([2,0], [3,1])
-puts
-game.display
-
-game[[5,3]].perform_slide([5,3], [4,2])
-puts
-game.display
-
-game[[5,5]].perform_slide([5,5], [4,4])
-puts
-game.display
-
-game[[6,6]].perform_slide([6,6], [5,5])
-puts
-game.display
-
-game[[7,5]].perform_slide([7,5], [6,6])
-puts
-game.display
-
-
-game[[3,1]].perform_moves([[3,1], [5,3], [7,5]])
-puts
-game.display
+# game = CheckerBoard.new
+# game.set_board
+# game.display
+#
+# game[[2,0]].perform_slide([2,0], [3,1])
+# puts
+# game.display
+#
+# game[[5,3]].perform_slide([5,3], [4,2])
+# puts
+# game.display
+#
+# game[[5,5]].perform_slide([5,5], [4,4])
+# puts
+# game.display
+#
+# game[[6,6]].perform_slide([6,6], [5,5])
+# puts
+# game.display
+#
+# game[[7,5]].perform_slide([7,5], [6,6])
+# puts
+# game.display
+#
+#
+# game[[3,1]].perform_moves([[3,1], [5,3], [7,5]])
+# puts
+# game.display

@@ -1,6 +1,6 @@
+class InvalidMoveError < StandardError; end
 class Piece
   attr_reader :board, :color, :pos, :king, :symbol
-  class InvalidMoveError < StandardError; end
   BLACK_MOVES = [[1, 1],   [1, -1]]
   RED_MOVES =   [[-1, -1], [-1, 1]]
 
@@ -37,11 +37,13 @@ class Piece
       elsif valid_jump?(start_pos, end_pos)
         perform_jump(start_pos, end_pos)
       else
-        raise InvalidMoveError.new("Can't jump nor slide to #{end_pos}")
+        raise InvalidMoveError.new("Can't move there")
       end
     else
       if valid_move_seq?(move_sequence)
         perform_moves!(move_sequence)
+      else
+        raise InvalidMoveError.new("Invalid move sequence")
       end
     end
   end
@@ -54,15 +56,16 @@ class Piece
 
   def perform_moves!(move_sequence)
     start_pos, *moves = move_sequence
+    # debugger
     moves.each do |move|
-      @board[start_pos].perform_jump(start_pos, move)
+      self.board[start_pos].perform_jump(start_pos, move)
       start_pos = move
     end
   end
 
   def slide_moves(start_pos)
     x, y = start_pos
-    moves = move_diffs.map { |(dx, dy)| [x + dx, y + dy] }
+    moves = slide_move_diffs.map { |(dx, dy)| [x + dx, y + dy] }
     moves.reject { |move| move.any? { |i| i < 0 || i > 7 } }
   end
 
@@ -72,14 +75,14 @@ class Piece
     moves.reject { |move| move.any? { |i| i < 0 || i > 7 } }
   end
 
-  def move_diffs
+  def slide_move_diffs
     return RED_MOVES + BLACK_MOVES if @king
     return RED_MOVES   if @color == :red
     return BLACK_MOVES if @color == :black
   end
 
   def jump_move_diffs
-    move_diffs.map { |diff| diff.map {|i| i * 2 } }
+    slide_move_diffs.map { |diff| diff.map {|i| i * 2 } }
   end
 
   def dup_piece
@@ -102,11 +105,11 @@ class Piece
   end
 
   def valid_slide?(start_pos, end_pos)
-    !@board[end_pos] || slide_moves(start_pos).include?(end_pos)
+    !@board[end_pos] && slide_moves(start_pos).include?(end_pos)
   end
 
   def valid_jump?(start_pos, end_pos)
-    !@board[end_pos] || jump_moves(start_pos).include?(end_pos)
+    !@board[end_pos] && jump_moves(start_pos).include?(end_pos)
   end
 
   def valid_move_seq?(move_sequence)
@@ -114,8 +117,10 @@ class Piece
     begin
       test_piece.perform_moves!(move_sequence)
       true
-    rescue InvalidMoveError
-      puts "Not a valid move sequence"
+    rescue InvalidMoveError => e
+      puts e
     end
+
+    false
   end
 end
