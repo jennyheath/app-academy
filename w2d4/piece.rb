@@ -13,8 +13,9 @@ class Piece
     if valid_slide?(start_pos, end_pos)
       move!(start_pos, end_pos)
       @king = true if promote?
+      true
     else
-      raise InvalidMoveError.new("Can't move there!")
+      false
     end
   end
 
@@ -24,27 +25,25 @@ class Piece
       move!(start_pos, end_pos)
       @board[jumped] = nil
       @king = true if promote?
+      true
     else
-      raise InvalidMoveError.new("Can't jump there!")
+      false
     end
   end
 
   def perform_moves(move_sequence)
     if move_sequence.count == 2
       start_pos, end_pos = move_sequence
-      if valid_slide?(start_pos, end_pos)
-        perform_slide(start_pos, end_pos)
-      elsif valid_jump?(start_pos, end_pos)
-        perform_jump(start_pos, end_pos)
-      else
-        raise InvalidMoveError.new("Can't move there")
+      unless perform_slide(start_pos, end_pos) || perform_jump(start_pos, end_pos)
+        raise InvalidMoveError.new("Can't move there.")
       end
+
+      perform_slide(start_pos, end_pos) if valid_slide?(start_pos, end_pos)
+      perform_jump(start_pos, end_pos) if valid_jump?(start_pos, end_pos)
+    elsif valid_move_seq?(move_sequence)
+      perform_moves!(move_sequence)
     else
-      if valid_move_seq?(move_sequence)
-        perform_moves!(move_sequence)
-      else
-        raise InvalidMoveError.new("Invalid move sequence")
-      end
+      raise InvalidMoveError.new("Invalid move sequence")
     end
   end
 
@@ -56,7 +55,6 @@ class Piece
 
   def perform_moves!(move_sequence)
     start_pos, *moves = move_sequence
-    # debugger
     moves.each do |move|
       self.board[start_pos].perform_jump(start_pos, move)
       start_pos = move
@@ -85,10 +83,6 @@ class Piece
     slide_move_diffs.map { |diff| diff.map {|i| i * 2 } }
   end
 
-  def dup_piece
-    Piece.new(@board.dup_board, @color, @pos.dup, @king)
-  end
-
   def jumped_piece(start_pos, end_pos)
     x = (end_pos.first + start_pos.first) / 2
     y = (end_pos.last + start_pos.last) / 2
@@ -98,10 +92,10 @@ class Piece
   def promote?
     if @pos.first == 0 || @pos.first == 7
       @symbol = "\u265A"
-      true
+      return true
     end
 
-    false
+    return false
   end
 
   def valid_slide?(start_pos, end_pos)
@@ -113,14 +107,15 @@ class Piece
   end
 
   def valid_move_seq?(move_sequence)
-    test_piece = self.dup_piece
+    test_board = @board.dup_board
+    test_piece = test_board[@pos]
     begin
       test_piece.perform_moves!(move_sequence)
-      true
+      return true
     rescue InvalidMoveError => e
       puts e
     end
 
-    false
+    return false
   end
 end
