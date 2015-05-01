@@ -21,7 +21,10 @@ class Piece
 
   def perform_jump(start_pos, end_pos)
     jumped = jumped_piece(start_pos, end_pos)
-    if valid_jump?(start_pos, end_pos) && jumped
+    return false unless @board[jumped]
+    jumped_opponent = true if @board[jumped].color != @color
+
+    if jumped_opponent && valid_jump?(start_pos, end_pos)
       move!(start_pos, end_pos)
       @board[jumped] = nil
       @king = true if promote?

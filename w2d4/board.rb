@@ -73,4 +73,27 @@ class CheckerBoard
     end
     test_board
   end
+
+  def available_jump_moves(color)
+    pieces = []
+    each_tile_with_index do |row, row_idx, tile, col_idx|
+      if tile
+        pieces << tile if tile && tile.color == color
+      end
+    end
+
+    potential_jump_moves = {}
+    pieces.each do |piece|
+      debugger
+      potential_jump_moves[piece] = piece.jump_moves(piece.pos).select do |jump_move|
+        piece.valid_jump?(piece.pos, jump_move)
+      end
+    end
+
+    potential_jump_moves
+  end
+
+  def available_jump_move?(color)
+    !available_jump_moves(color).empty?
+  end
 end
