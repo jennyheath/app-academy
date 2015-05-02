@@ -1,16 +1,16 @@
 class Card
   attr_reader :value, :suit
 
-  FACE_CARD_VALUES = {
-    # :two => 2,
-    # :three => 3,
-    # :four => 4,
-    # :five => 5,
-    # :six => 6,
-    # :seven => 7,
-    # :eight => 8,
-    # :nine => 9,
-    # :ten => 10,
+  CARD_VALUES = {
+    :two => 2,
+    :three => 3,
+    :four => 4,
+    :five => 5,
+    :six => 6,
+    :seven => 7,
+    :eight => 8,
+    :nine => 9,
+    :ten => 10,
     :jack => 11,
     :queen => 12,
     :king => 13,
@@ -29,11 +29,15 @@ class Card
     @suit = suit
   end
 
-  def values
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].concat(FACE_CARD_VALUES.keys)
+  def self.values
+    CARD_VALUES.values
   end
 
-  def suits
+  def self.suits
     CARD_SUITS.keys
+  end
+
+  def value_suit_arr
+    [@value, @suit]
   end
 end

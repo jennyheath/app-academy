@@ -1,17 +1,18 @@
-def generate_hand(cards_string) # '5h 6d '
-  SUITS = {
-    "h" => :heart,
-    "c" => :club,
-    "d" => :diamond,
-    "s" => :spade
-  }
+SUITS = {
+  "h" => :heart,
+  "c" => :club,
+  "d" => :diamond,
+  "s" => :spade
+}
 
-  FACE_CARDS = {
-    "k" => 13,
-    "q" => 12,
-    "j" => 11,
-    "a" => 14
-  }
+FACE_CARDS = {
+  "k" => 13,
+  "q" => 12,
+  "j" => 11,
+  "a" => 14
+}
+
+def generate_hand(cards_string)  
   cards = cards_string.split(" ")
   card_objects = []
 

@@ -3,17 +3,20 @@ require 'game.rb'
 
 describe Game do
   let(:players) { [Player.new("Piggie", 100), Player.new("Kermit", 100), Player.new("Beaker", 100)] }
-  let (:bets) { [] }
+  let (:bets) { [5, 5, 20, 20, 20, 30] }
   subject(:game) { Game.new(Deck.new, players, bets) }
 
   describe "#total_bets" do
-    #add bets
     it "counts up all the bets" do
+      expect(total_bets).to eq(100)
     end
   end
 
   describe "#get_all_hands" do
     #deal hands
+    it "returns an array of all the hands of currently playing players" do
+      expect(get_all_hands.count).to eq(3)
+    end
   end
 
   describe "#best_hand" do
