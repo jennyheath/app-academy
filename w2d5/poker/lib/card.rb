@@ -37,7 +37,7 @@ class Card
     CARD_SUITS.keys
   end
 
-  def value_suit_arr
+  def value_suit
     [@value, @suit]
   end
 end
