@@ -1,4 +1,4 @@
-class TagTopic
+class TagTopic < ActiveRecord::Base
 
   has_many(
     :taggings,

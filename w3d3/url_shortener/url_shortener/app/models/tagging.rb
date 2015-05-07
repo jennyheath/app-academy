@@ -1,4 +1,4 @@
-class Tagging
+class Tagging < ActiveRecord::Base
 
   belongs_to(
     :tag_topic,
