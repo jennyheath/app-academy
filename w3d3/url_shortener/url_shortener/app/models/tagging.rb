@@ -1,5 +1,9 @@
 class Tagging < ActiveRecord::Base
 
+  def self.tag!(tag_topic_id, url_id)
+    Tagging.create!({ :tag_topic_id => tag_topic_id, :short_url_id => url_id })
+  end
+
   belongs_to(
     :tag_topic,
     class_name: "TagTopic",
