@@ -39,6 +39,15 @@ class ShortenedUrl < ActiveRecord::Base
     source: :user
     )
 
+  has_many(
+    :taggings,
+    class_name: "Tagging",
+    foreign_key: :short_url_id,
+    primary_key: :id
+  )
+
+  has_many :tag_topics, through: :taggings, source: :tag_topic
+
   def num_clicks
     visitors.count
   end
