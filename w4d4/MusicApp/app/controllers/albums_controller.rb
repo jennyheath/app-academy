@@ -1,4 +1,6 @@
 class AlbumsController < ApplicationController
+  before_action :verify_logged_in
+
   def create
     @album = Album.new(album_params)
     if @album.save
@@ -20,9 +22,6 @@ class AlbumsController < ApplicationController
     @album = Album.find(params[:id])
     if @album
       render :edit
-    # else
-    #   flash[:errors] = ["This album does not exist"]
-    #   redirect_to bands_url
     end
   end
 
@@ -47,9 +46,6 @@ class AlbumsController < ApplicationController
     @band = Band.find(@album.band_id)
     if @album
       render :show
-    # else
-    #   flash[:errors] = ["This album does not exist"]
-    #   redirect_to bands_url
     end
   end
 
@@ -57,5 +53,12 @@ class AlbumsController < ApplicationController
 
   def album_params
     params.require(:album).permit(:band_id, :title, :recording_type)
+  end
+
+  def verify_logged_in
+    if current_user.nil?
+      flash[:errors] = ["Please log in."]
+      redirect_to new_session_url
+    end
   end
 end
