@@ -1,0 +1,18 @@
+<%= render "shared/errors" %>
+
+<h2>Edit band</h2>
+
+<form action="<%= band_url(@band) %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <input
+    type="hidden"
+    name="authenticity_token"
+    value="<%= form_authenticity_token %>">
+
+  <label>Name
+    <input type="text" name="band[name]" value="<%= @band.name %>">
+  </label>
+  <br><br>
+
+  <input type="Submit" type="Create Band">
+</form>

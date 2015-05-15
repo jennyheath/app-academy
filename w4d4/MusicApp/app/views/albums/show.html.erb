@@ -1,0 +1,11 @@
+<%= render "shared/errors" %>
+
+<h2> <%= @album.title %> </h2>
+
+<label>Artist:
+  <%= link_to @band.name, band_url(@band) %>
+</label>
+<br><br>
+
+<%= link_to "Edit", edit_album_url %><br>
+<%= link_to "Destroy", album_url(@album), method: :delete %>

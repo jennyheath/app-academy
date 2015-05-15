@@ -1,0 +1,12 @@
+<%= render "shared/errors" %>
+
+<h2> <%= @band.name %> </h2>
+
+<ul>
+  <% @band.albums.each do |album| %>
+    <li> <%= link_to album.title, album_url(album) %> </li>
+  <% end %>
+</ul>
+
+<%= link_to "Edit band info", edit_band_url %><br>
+<%= link_to "Destroy band", band_url(@band), method: :delete %>
