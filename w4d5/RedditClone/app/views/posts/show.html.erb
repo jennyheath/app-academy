@@ -1,0 +1,10 @@
+<h1><%= @post.title %></h1>
+<% if @post.url %>
+  <%= link_to @post.url, @post.url %>
+<% end %>
+<br>
+<%= @author.username %>
+<br>
+<pre><%= @post.content %></pre>
+
+<%#= link_to "Back to #{@sub.title}", sub_url(@sub) %> 

@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
     @user = User.find_by_credentials(user_params)
     if @user
       log_in!(@user)
-      render json: @user
+      redirect_to subs_url
     else
       @user = User.new(user_params)
       flash.now[:errors] = ["Invalid Login"]

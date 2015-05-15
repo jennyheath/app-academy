@@ -40,6 +40,9 @@ class SubsController < ApplicationController
 
   def show
     @sub = Sub.find(params[:id])
+    @posts = @sub.posts.includes(:author)
+    @new_post = Post.new
+    @new_post.subs = [@sub]
   end
 
   def verify_moderator
