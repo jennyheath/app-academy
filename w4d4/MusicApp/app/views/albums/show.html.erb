@@ -1,9 +1,16 @@
-<%= render "shared/errors" %>
-
 <h2> <%= @album.title %> </h2>
 
 <label>Artist:
   <%= link_to @band.name, band_url(@band) %>
+</label>
+<br>
+
+<label>Tracks:
+  <ul>
+  <% @album.tracks.each do |track| %>
+    <li> <%= link_to track.title, track_url(track) %> </li>
+  <% end %>
+  </ul>
 </label>
 <br><br>
 

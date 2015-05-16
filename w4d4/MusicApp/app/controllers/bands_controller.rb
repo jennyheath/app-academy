@@ -64,11 +64,4 @@ class BandsController < ApplicationController
   def band_params
     params.require(:band).permit(:name)
   end
-
-  def verify_logged_in
-    if current_user.nil?
-      flash[:errors] = ["Please log in."]
-      redirect_to new_session_url
-    end
-  end
 end

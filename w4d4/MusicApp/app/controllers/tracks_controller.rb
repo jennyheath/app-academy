@@ -1,4 +1,6 @@
 class TracksController < ApplicationController
+  before_action :verify_logged_in
+
   def new
     @track = Track.new
     render :new
@@ -10,26 +12,39 @@ class TracksController < ApplicationController
       redirect_to track_url(@track)
     else
       flash[:errors] = @track.errors.full_messages
-      @track = Track.new(track_params)
       render :new
     end
   end
 
   def edit
+    @track = Track.find(params[:id])
   end
 
   def show
+    @track = Track.find(params[:id])
+    @album = @track.album
   end
 
   def update
+    @track = Track.find(params[:id])
+    if @track.update(track_params)
+      redirect_to track_url(@track)
+    else
+      flash[:errors] = @track.errors.full_messages
+      render :edit
+    end
   end
 
   def destroy
+    @track = Track.find(params[:id])
+    album = @track.album
+    @track.destroy
+    redirect_to album_url(album)
   end
 
   private
 
   def track_params
-
+    params.require(:track).permit(:title, :album_id, :track_type, :lyrics)
   end
 end

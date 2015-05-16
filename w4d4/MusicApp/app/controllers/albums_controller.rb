@@ -54,11 +54,4 @@ class AlbumsController < ApplicationController
   def album_params
     params.require(:album).permit(:band_id, :title, :recording_type)
   end
-
-  def verify_logged_in
-    if current_user.nil?
-      flash[:errors] = ["Please log in."]
-      redirect_to new_session_url
-    end
-  end
 end

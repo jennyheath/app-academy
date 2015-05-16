@@ -1,0 +1,10 @@
+<h1> <%= @track.title %> </h1>
+
+<label>Album:
+  <%= link_to @album.title, album_url(@album) %>
+</label>
+
+<br><br>
+<%= link_to "Edit", edit_track_url %>
+<br>
+<%= link_to "Destroy", track_url(@track), method: :delete %>
