@@ -1,6 +1,7 @@
 require 'webrick'
 require 'phase6/router'
 require 'phase6/controller_base'
+require 'byebug'
 
 describe Phase6::Route do
   let(:req) { WEBrick::HTTPRequest.new(Logger: nil) }
@@ -25,7 +26,7 @@ describe Phase6::Route do
       expect(index_route.matches?(req)).to be_truthy
     end
 
-    it "correctly doesn't matche regular expression with capture" do
+    it "correctly doesn't match regular expression with capture" do
       index_route = Phase6::Route.new(Regexp.new("^/users/(?<id>\\d+)$"), :get, "UsersController", :index)
       allow(req).to receive(:path) { "/statuses/1" }
       allow(req).to receive(:request_method) { :get }
@@ -34,18 +35,35 @@ describe Phase6::Route do
   end
 
   describe "#run" do
-    before(:all) { class DummyController; end }
-    after(:all) { Object.send(:remove_const, "DummyController") }
+    # before(:all) { DummyController = double }
+    # after(:all) { Object.send(:remove_const, "DummyController") }
+    let(:dummy_controller_class) { double }
 
     it "instantiates controller and invokes action" do
       # reader beware. hairy adventures ahead.
       # this is really checking way too much implementation,
+      # # but tests the aproach recommended in the project
+      # allow(req).to receive(:path) { "/users" }
+      #
+      # dummy_controller_class = DummyController
+      # dummy_controller_instance = DummyController.new
+      # # debugger
+      # allow(dummy_controller_instance).to receive(:invoke_action)
+      # allow(dummy_controller_class).to receive(:new).with(req, res, {}) do
+      #   dummy_controller_instance
+      # end
+      # expect(dummy_controller_instance).to receive(:invoke_action)
+      # index_route = Phase6::Route.new(Regexp.new("^/users$"), :get, dummy_controller_class, :index)
+      # index_route.run(req, res)
+
       # but tests the aproach recommended in the project
       allow(req).to receive(:path) { "/users" }
 
-      dummy_controller_class = DummyController
-      dummy_controller_instance = DummyController.new
-      allow(dummy_controller_instance).to receive(:invoke_action)
+      # dummy_controller_class = DummyController
+      # dummy_controller_instance = DummyController.new
+      # debugger
+      # allow(dummy_controller_instance).to receive(:invoke_action)
+      dummy_controller_instance = double
       allow(dummy_controller_class).to receive(:new).with(req, res, {}) do
         dummy_controller_instance
       end
