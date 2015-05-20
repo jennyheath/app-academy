@@ -12,12 +12,12 @@ module Phase5
     # passed in as a hash to `Params.new` as below:
     def initialize(req, route_params = {})
       @params = route_params
-      parse_www_encoded_form(req.query_string) if req.query_string
-      parse_www_encoded_form(req.body) if req.body
+      @params.merge!(parse_www_encoded_form(req.query_string)) if req.query_string
+      @params.merge!(parse_www_encoded_form(req.body)) if req.body
     end
 
     def [](key)
-      @params[key.to_s] || @params[key.to_sym]
+      @params[key.to_s]
     end
 
     def to_s
@@ -36,9 +36,11 @@ module Phase5
     def parse_www_encoded_form(www_encoded_form)
       www_array = URI::decode_www_form(www_encoded_form)
       nested_hash = {}
+      # to merge body and query_string (in case of conflicting keys):
+      # nested_hash = @params
 
       www_array.each do |pair|
-        keys = pair.first
+        keys = parse_key(pair.first)
         val = pair.last
         current = nested_hash
         keys.each_with_index do |key, idx|

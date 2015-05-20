@@ -10,9 +10,7 @@ module Phase4
       rails_cookie = req.cookies.find do |cookie|
         cookie if cookie.name == "_rails_lite_app"
       end
-      # debugger
-      @session_cookie = (rails_cookie ?
-               JSON::parse(rails_cookie.value) : {})
+      @session_cookie = (rails_cookie ? JSON.parse(rails_cookie.value) : {})
     end
 
     def [](key)
