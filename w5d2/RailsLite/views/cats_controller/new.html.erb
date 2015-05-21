@@ -1,4 +1,5 @@
-<%= render "errors" %>
+<%= flash[:errors].join("<br>").html_safe if flash[:errors] %>
+<br>
 
 <form action="/cats" method="POST">
   <label>Name
