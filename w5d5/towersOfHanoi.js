@@ -10,16 +10,10 @@ function HanoiGame() {
 }
 
 HanoiGame.prototype.isWon = function() {
-  if (this.stacks[0].length === 0 &&
-      (this.stacks[1].length === 0 || this.stacks[2].length === 0)) {
-    return true;
-  } else {
-    return false;
-  }
+  return (this.stacks[2].length == 3 || (this.stacks[1].length == 3);
 };
 
 HanoiGame.prototype.isValidMove = function(startTowerIdx, endTowerIdx) {
-  // console.log(this.stacks);
   if (this.stacks[startTowerIdx].length === 0) {
     return false;
   } else {
