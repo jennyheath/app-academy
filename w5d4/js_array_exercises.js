@@ -1,4 +1,4 @@
-var myUniq = function(arr) {
+Array.prototype.myUniq = function(arr) {
   var arr2 = [];
   for (var i = 0; i < arr.length; i++) {
     if (arr2.indexOf(arr[i]) === -1) {
@@ -8,10 +8,7 @@ var myUniq = function(arr) {
   return arr2;
 }
 
-var arr = [1, 2, 2, 4, 5];
-// console.log(myUniq(arr));
-
-var twoSum = function(arr) {
+Array.prototype.twoSum = function(arr) {
   var arr2 = [];
   for (var i = 0; i < arr.length - 1; i++) {
     for (var j = i + 1; j < arr.length; j++) {
@@ -23,10 +20,7 @@ var twoSum = function(arr) {
   return arr2;
 }
 
-var fun = [-1, 0, 2, -2, 1];
-// console.log(twoSum(fun));
-
-var myTranspose = function(arr) {
+Array.prototype.myTranspose = function(arr) {
   var arr2 = [];
   while (arr2.push([]) < arr[0].length);
 
@@ -38,10 +32,7 @@ var myTranspose = function(arr) {
   return arr2;
 }
 
-var t = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]];
-// console.log(myTranspose(t));
-
-var stockPicker = function(prices) {
+Array.prototype.stockPicker = function(prices) {
   var maxProfit = 0;
   var bestDays = [];
   for (var i = 0; i < prices.length - 1; i++) {
@@ -55,6 +46,3 @@ var stockPicker = function(prices) {
   }
   return bestDays;
 }
-
-var prices = [1, 5, 2, 7, 3, 0] //[0,3]
-// console.log(stockPicker(prices));

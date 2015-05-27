@@ -1,26 +1,18 @@
 Array.prototype.bubbleSort = function() {
   var sorted = false;
   while (!sorted) {
-    var swaps = 0;
+    sorted = true;
     for (var i = 0; i < this.length - 1; i++) {
       if (this[i + 1] < this[i]) {
         var temp = this[i];
         this[i] = this[i + 1];
         this[i + 1] = temp;
-        swaps++;
+        sorted = false;
       }
-    }
-    if (swaps === 0) {
-      sorted = true;
     }
   }
   return this;
 }
-
-var array = [5, 4, 2, 3, 10];
-// console.log(array.bubbleSort());
-
-////////////////
 
 String.prototype.substring = function() {
   var result = [];

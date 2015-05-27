@@ -1,12 +1,10 @@
 var range = function(start, end) {
-  if (end < start) {
+  if (end <= start) {
     return [];
   } else {
     return [start].concat(range(start + 1, end));
   }
 }
-
-// console.log(range(1, 5));
 
 var exp = function(base, pow) {
   if (pow === 0) {
@@ -19,8 +17,6 @@ var exp = function(base, pow) {
     return base * exp(base, (pow - 1) / 2) * exp(base, (pow - 1) / 2);
   }
 }
-
-// console.log(exp(3, 4));
 
 var fib = function(n) {
   if (n === 0) {
@@ -35,8 +31,6 @@ var fib = function(n) {
     return fibs;
   }
 }
-
-// console.log(fib(5));
 
 var bsearch = function(array, target) {
   var middle = Math.floor(array.length / 2);
@@ -55,10 +49,6 @@ var bsearch = function(array, target) {
     return undefined;
   }
 }
-
-// console.log(bsearch([1, 3, 4, 5, 9], 5));
-// console.log(bsearch([2, 4, 6, 8, 10], 6))
-// console.log(bsearch([1, 2, 3, 4, 5, 7], 6));
 
 var makeChange = function(amt, coins) {
   // coins.bubbleSort();
