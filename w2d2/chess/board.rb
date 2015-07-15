@@ -1,5 +1,4 @@
 require_relative './pieces'
-require 'byebug'
 require 'colorize'
 
 class InvalidMoveError < StandardError; end
